@@ -1,0 +1,38 @@
+{
+    "name": "josskixg/licensia",
+    "description": "Cryptographic Software Licensing, Offline Activation & Anti-Piracy Engine for Laravel 11 / PHP 8.2 (Ed25519 Signed License Keys)",
+    "type": "library",
+    "license": "MIT",
+    "keywords": [
+        "laravel",
+        "licensing",
+        "ed25519",
+        "libsodium",
+        "offline-activation",
+        "anti-piracy",
+        "saas-boilerplate",
+        "php82"
+    ],
+    "authors": [
+        {
+            "name": "josskixg",
+            "homepage": "https://github.com/josskixg"
+        }
+    ],
+    "require": {
+        "php": "^8.2",
+        "ext-sodium": "*"
+    },
+    "autoload": {
+        "psr-4": {
+            "App\\": "app/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Tests\\": "tests/"
+        }
+    },
+    "minimum-stability": "stable",
+    "prefer-stable": true
+}

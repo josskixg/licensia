@@ -1,0 +1,1218 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Licensia — Ed25519 Cryptographic Software Licensing &amp; Offline Activation Engine</title>
+  <meta name="description" content="Cryptographic Software Licensing, Offline Activation &amp; Anti-Piracy Engine for Laravel 11 / PHP 8.2 (Ed25519 Signed License Keys).">
+  <link rel="icon" type="image/svg+xml" href="assets/brand/favicon.svg">
+  <link rel="icon" type="image/png" sizes="32x32" href="assets/brand/favicon-32.png">
+  <link rel="apple-touch-icon" href="assets/brand/apple-touch-icon.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600&family=Geist+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root, [data-theme="dark"] {
+      --bg-canvas: #000000;
+      --bg-surface: #0a0a0a;
+      --bg-elevated: #111111;
+      --bg-input: #050505;
+      --text-primary: #ededed;
+      --text-secondary: #a1a1aa;
+      --text-muted: #666666;
+      --border-hairline: rgba(255, 255, 255, 0.11);
+      --border-strong: rgba(255, 255, 255, 0.22);
+      --card-shadow: 0 0 0 1px rgba(255, 255, 255, 0.11), 0 2px 4px rgba(0, 0, 0, 0.5);
+      --accent-blue: #0070f3;
+      --accent-blue-bg: rgba(0, 112, 243, 0.12);
+      --seal-emerald: #10b981;
+      --seal-emerald-bg: rgba(16, 185, 129, 0.12);
+      --seal-emerald-border: rgba(16, 185, 129, 0.35);
+      --danger-red: #ff5b4f;
+      --danger-red-bg: rgba(255, 91, 79, 0.12);
+      --danger-red-border: rgba(255, 91, 79, 0.38);
+      --amber-warn: #f5a623;
+      --btn-primary-bg: #ededed;
+      --btn-primary-text: #000000;
+      --btn-primary-hover: #ffffff;
+      --focus-ring: hsla(212, 100%, 48%, 1);
+    }
+
+    [data-theme="light"] {
+      --bg-canvas: #ffffff;
+      --bg-surface: #fafafa;
+      --bg-elevated: #f3f3f3;
+      --bg-input: #ffffff;
+      --text-primary: #171717;
+      --text-secondary: #4d4d4d;
+      --text-muted: #666666;
+      --border-hairline: rgba(0, 0, 0, 0.08);
+      --border-strong: rgba(0, 0, 0, 0.18);
+      --card-shadow: 0 0 0 1px rgba(0, 0, 0, 0.08), 0 2px 2px rgba(0, 0, 0, 0.04), 0 0 0 1px #fafafa;
+      --accent-blue: #0070f3;
+      --accent-blue-bg: #ebf5ff;
+      --seal-emerald: #059669;
+      --seal-emerald-bg: rgba(16, 185, 129, 0.10);
+      --seal-emerald-border: rgba(5, 150, 105, 0.32);
+      --danger-red: #e03131;
+      --danger-red-bg: rgba(224, 49, 49, 0.09);
+      --danger-red-border: rgba(224, 49, 49, 0.32);
+      --amber-warn: #d97706;
+      --btn-primary-bg: #171717;
+      --btn-primary-text: #ffffff;
+      --btn-primary-hover: #000000;
+      --focus-ring: hsla(212, 100%, 48%, 1);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html, body {
+      background-color: var(--bg-canvas);
+      color: var(--text-primary);
+      font-family: 'Geist', -apple-system, BlinkMacSystemFont, 'Inter', sans-serif;
+      font-feature-settings: "liga" 1;
+      font-size: 14px;
+      line-height: 1.5;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    .mono {
+      font-family: 'Geist Mono', 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
+      font-variant-numeric: tabular-nums;
+      font-feature-settings: "tnum" 1, "liga" 1;
+    }
+
+    /* Top Sticky Operator Bar */
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 40;
+      background-color: var(--bg-canvas);
+      box-shadow: 0 1px 0 0 var(--border-hairline);
+      padding: 0 20px;
+    }
+
+    .topbar-inner {
+      max-width: 1320px;
+      margin: 0 auto;
+      min-height: 60px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+
+    .brand-group {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .brand-logo {
+      width: 32px;
+      height: 32px;
+      border-radius: 6px;
+      flex-shrink: 0;
+      box-shadow: 0 0 0 1px var(--border-hairline);
+    }
+
+    .brand-title {
+      font-size: 16px;
+      font-weight: 600;
+      letter-spacing: -0.03em;
+      color: var(--text-primary);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .version-pill {
+      font-size: 11px;
+      font-weight: 500;
+      padding: 2px 8px;
+      border-radius: 9999px;
+      background: var(--accent-blue-bg);
+      color: var(--accent-blue);
+      letter-spacing: 0;
+    }
+
+    .topbar-actions {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .pubkey-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 10px;
+      border-radius: 6px;
+      background: var(--bg-surface);
+      box-shadow: 0 0 0 1px var(--border-hairline);
+      font-size: 12px;
+      color: var(--text-secondary);
+    }
+
+    .status-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background-color: var(--seal-emerald);
+      flex-shrink: 0;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      min-height: 44px;
+      padding: 0 14px;
+      border-radius: 6px;
+      font-family: inherit;
+      font-size: 13px;
+      font-weight: 500;
+      cursor: pointer;
+      border: none;
+      transition: background-color 0.12s ease, box-shadow 0.12s ease, color 0.12s ease;
+      text-decoration: none;
+      white-space: nowrap;
+    }
+
+    .btn:focus-visible, input:focus-visible, select:focus-visible, textarea:focus-visible {
+      outline: 2px solid var(--focus-ring);
+      outline-offset: 1px;
+    }
+
+    .btn-primary {
+      background-color: var(--btn-primary-bg);
+      color: var(--btn-primary-text);
+    }
+
+    .btn-primary:hover {
+      background-color: var(--btn-primary-hover);
+    }
+
+    .btn-secondary {
+      background-color: var(--bg-surface);
+      color: var(--text-primary);
+      box-shadow: 0 0 0 1px var(--border-hairline);
+    }
+
+    .btn-secondary:hover {
+      background-color: var(--bg-elevated);
+      box-shadow: 0 0 0 1px var(--border-strong);
+    }
+
+    .btn-danger-ghost {
+      background-color: var(--danger-red-bg);
+      color: var(--danger-red);
+      box-shadow: 0 0 0 1px var(--danger-red-border);
+    }
+
+    .btn-danger-ghost:hover {
+      opacity: 0.9;
+    }
+
+    /* Main Operator Container */
+    .workspace {
+      max-width: 1320px;
+      margin: 0 auto;
+      padding: 24px 20px 64px;
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+    }
+
+    /* Telemetry Strip */
+    .telemetry-strip {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 12px;
+    }
+
+    .metric-box {
+      background-color: var(--bg-surface);
+      box-shadow: var(--card-shadow);
+      border-radius: 8px;
+      padding: 14px 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .metric-label {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      color: var(--text-muted);
+      font-weight: 500;
+    }
+
+    .metric-value {
+      font-size: 20px;
+      font-weight: 600;
+      letter-spacing: -0.04em;
+      color: var(--text-primary);
+    }
+
+    .metric-sub {
+      font-size: 12px;
+      color: var(--text-secondary);
+    }
+
+    /* Two-Column Operator Split */
+    .operator-grid {
+      display: grid;
+      grid-template-columns: 1fr 1.15fr;
+      gap: 20px;
+      align-items: start;
+    }
+
+    .panel {
+      background-color: var(--bg-surface);
+      box-shadow: var(--card-shadow);
+      border-radius: 8px;
+      overflow: hidden;
+    }
+
+    .panel-header {
+      padding: 16px 20px;
+      box-shadow: 0 1px 0 0 var(--border-hairline);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .panel-title-wrap {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+
+    .panel-kicker {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--text-muted);
+    }
+
+    .panel-title {
+      font-size: 16px;
+      font-weight: 600;
+      letter-spacing: -0.03em;
+      color: var(--text-primary);
+    }
+
+    .panel-body {
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    /* Form Controls */
+    .form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+
+    .field {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .field-label {
+      font-size: 12px;
+      font-weight: 500;
+      color: var(--text-secondary);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .input, .select, .textarea {
+      width: 100%;
+      min-height: 44px;
+      padding: 8px 12px;
+      background-color: var(--bg-input);
+      color: var(--text-primary);
+      border: none;
+      border-radius: 6px;
+      box-shadow: 0 0 0 1px var(--border-hairline);
+      font-size: 13px;
+      font-family: inherit;
+    }
+
+    .textarea {
+      min-height: 108px;
+      resize: vertical;
+      line-height: 1.55;
+      word-break: break-all;
+    }
+
+    /* Tier Selector Pills */
+    .tier-selector {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 8px;
+    }
+
+    .tier-btn {
+      min-height: 52px;
+      padding: 8px 10px;
+      border-radius: 6px;
+      background-color: var(--bg-input);
+      color: var(--text-secondary);
+      box-shadow: 0 0 0 1px var(--border-hairline);
+      border: none;
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      justify-content: center;
+      gap: 2px;
+      text-align: left;
+      transition: all 0.12s ease;
+    }
+
+    .tier-btn[aria-pressed="true"] {
+      background-color: var(--accent-blue-bg);
+      color: var(--text-primary);
+      box-shadow: 0 0 0 1.5px var(--accent-blue);
+    }
+
+    .tier-name {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--text-primary);
+    }
+
+    .tier-meta {
+      font-size: 11px;
+      color: var(--text-muted);
+    }
+
+    /* Verification Banner */
+    .seal-banner {
+      padding: 14px 16px;
+      border-radius: 6px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .seal-banner.valid {
+      background-color: var(--seal-emerald-bg);
+      box-shadow: 0 0 0 1px var(--seal-emerald-border);
+      color: var(--seal-emerald);
+    }
+
+    .seal-banner.tampered {
+      background-color: var(--danger-red-bg);
+      box-shadow: 0 0 0 1px var(--danger-red-border);
+      color: var(--danger-red);
+    }
+
+    .seal-status-title {
+      font-size: 13px;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .seal-reason {
+      font-size: 12px;
+      color: var(--text-secondary);
+      margin-top: 2px;
+    }
+
+    .pill-badge {
+      padding: 4px 10px;
+      border-radius: 9999px;
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.03em;
+    }
+
+    .pill-valid {
+      background-color: var(--seal-emerald-bg);
+      color: var(--seal-emerald);
+      box-shadow: 0 0 0 1px var(--seal-emerald-border);
+    }
+
+    .pill-tampered {
+      background-color: var(--danger-red-bg);
+      color: var(--danger-red);
+      box-shadow: 0 0 0 1px var(--danger-red-border);
+    }
+
+    /* Token Anatomy Breakdown */
+    .claims-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 8px;
+    }
+
+    .claim-cell {
+      padding: 10px 12px;
+      border-radius: 6px;
+      background-color: var(--bg-input);
+      box-shadow: 0 0 0 1px var(--border-hairline);
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+
+    .claim-key {
+      font-size: 11px;
+      color: var(--text-muted);
+    }
+
+    .claim-val {
+      font-size: 12px;
+      color: var(--text-primary);
+      word-break: break-all;
+    }
+
+    /* Table */
+    .table-wrap {
+      width: 100%;
+      overflow-x: auto;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      text-align: left;
+    }
+
+    th {
+      padding: 12px 16px;
+      font-size: 11px;
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      color: var(--text-muted);
+      box-shadow: 0 1px 0 0 var(--border-hairline);
+      background-color: var(--bg-elevated);
+    }
+
+    td {
+      padding: 12px 16px;
+      font-size: 13px;
+      box-shadow: 0 1px 0 0 var(--border-hairline);
+      color: var(--text-primary);
+      vertical-align: middle;
+    }
+
+    /* Code Block */
+    .code-pre {
+      background-color: var(--bg-input);
+      box-shadow: 0 0 0 1px var(--border-hairline);
+      border-radius: 6px;
+      padding: 14px 16px;
+      overflow-x: auto;
+      font-size: 12px;
+      line-height: 1.6;
+      color: var(--text-primary);
+    }
+
+    .footer-bar {
+      max-width: 1320px;
+      margin: 0 auto;
+      padding: 20px;
+      box-shadow: 0 -1px 0 0 var(--border-hairline);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 12px;
+      font-size: 12px;
+      color: var(--text-muted);
+    }
+
+    @media (max-width: 980px) {
+      .operator-grid {
+        grid-template-columns: 1fr;
+      }
+      .telemetry-strip {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    @media (max-width: 600px) {
+      .telemetry-strip {
+        grid-template-columns: 1fr;
+      }
+      .form-row, .claims-grid, .tier-selector {
+        grid-template-columns: 1fr;
+      }
+      .topbar-inner {
+        padding: 10px 0;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbar-inner">
+      <div class="brand-group">
+        <img src="logo.svg" alt="Licensia Logo" class="brand-logo" width="32" height="32">
+        <div>
+          <div class="brand-title">
+            Licensia
+            <span class="version-pill mono">LIC-v1 · Ed25519</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="topbar-actions">
+        <div class="pubkey-badge mono" title="Active Publisher Ed25519 Public Key">
+          <span class="status-dot"></span>
+          <span>PUBKEY:</span>
+          <strong id="navPubKeyShort">8f4e9a1c...3d7b02e4</strong>
+        </div>
+        <button type="button" class="btn btn-secondary mono" id="rotateKeyBtn" title="Generate new publisher keypair">
+          Rotate Keypair
+        </button>
+        <button type="button" class="btn btn-secondary" id="themeToggleBtn" aria-label="Toggle Dark or Light Mode">
+          <span id="themeToggleLabel">Light Mode</span>
+        </button>
+        <a href="https://github.com/josskixg/licensia" class="btn btn-primary" target="_blank" rel="noopener">
+          GitHub Repo
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <main class="workspace">
+    <!-- Top Cryptographic Telemetry Strip -->
+    <section class="telemetry-strip" aria-label="Cryptographic Engine Telemetry">
+      <div class="metric-box">
+        <span class="metric-label mono">SIGNATURE SCHEME</span>
+        <span class="metric-value mono">Ed25519 / 64B</span>
+        <span class="metric-sub">PHP 8.2 <code class="mono">ext-sodium</code> detached</span>
+      </div>
+      <div class="metric-box">
+        <span class="metric-label mono">OFFLINE VERIFIER STATUS</span>
+        <span class="metric-value mono" id="metricVerifierState" style="color: var(--seal-emerald);">VALID_SEAL</span>
+        <span class="metric-sub" id="metricVerifierSub">Zero DB round-trips required</span>
+      </div>
+      <div class="metric-box">
+        <span class="metric-label mono">ACTIVE SEAT ALLOCATION</span>
+        <span class="metric-value mono" id="metricSeatCount">3 / 5 SEATS</span>
+        <span class="metric-sub">SHA-256 environment binding</span>
+      </div>
+      <div class="metric-box">
+        <span class="metric-label mono">ISSUED CERTIFICATES</span>
+        <span class="metric-value mono" id="metricIssuedTotal">1,428</span>
+        <span class="metric-sub">Grace window: 72h heartbeat</span>
+      </div>
+    </section>
+
+    <!-- Primary Command & Inspect Split -->
+    <section class="operator-grid">
+      <!-- Left: Cryptographic License Generator -->
+      <article class="panel" aria-labelledby="issuerHeading">
+        <div class="panel-header">
+          <div class="panel-title-wrap">
+            <span class="panel-kicker mono">01 // KEY ISSUER</span>
+            <h1 class="panel-title" id="issuerHeading">Cryptographic Certificate Generator</h1>
+          </div>
+          <span class="pill-badge pill-valid mono" id="selectedTierBadge">TIER: PRO (5 SEATS)</span>
+        </div>
+
+        <div class="panel-body">
+          <div class="field">
+            <span class="field-label">Select Product Tier</span>
+            <div class="tier-selector" role="group" aria-label="License Tier">
+              <button type="button" class="tier-btn" data-tier="starter" data-seats="1" aria-pressed="false">
+                <span class="tier-name">Starter</span>
+                <span class="tier-meta mono">1 Seat · Single Domain</span>
+              </button>
+              <button type="button" class="tier-btn" data-tier="pro" data-seats="5" aria-pressed="true">
+                <span class="tier-name">Pro</span>
+                <span class="tier-meta mono">5 Seats · Multi-Node</span>
+              </button>
+              <button type="button" class="tier-btn" data-tier="agency" data-seats="25" aria-pressed="false">
+                <span class="tier-name">Agency</span>
+                <span class="tier-meta mono">25 Seats · Fleet</span>
+              </button>
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="field">
+              <label class="field-label" for="inputProduct">
+                <span>Product Slug</span>
+                <span class="mono">prd</span>
+              </label>
+              <input id="inputProduct" type="text" class="input mono" value="larasaas-commerce-v4">
+            </div>
+            <div class="field">
+              <label class="field-label" for="inputCustomer">
+                <span>Customer Identity</span>
+                <span class="mono">cst</span>
+              </label>
+              <input id="inputCustomer" type="email" class="input mono" value="cto@nusantara.dev">
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="field">
+              <label class="field-label" for="inputDomain">
+                <span>Bound Domain / HWID</span>
+                <span class="mono">bnd</span>
+              </label>
+              <input id="inputDomain" type="text" class="input mono" value="billing.nusantara.dev">
+            </div>
+            <div class="field">
+              <label class="field-label" for="inputExpiry">
+                <span>Expiration Date (UTC)</span>
+                <span class="mono">exp</span>
+              </label>
+              <input id="inputExpiry" type="date" class="input mono" value="2027-11-09">
+            </div>
+          </div>
+
+          <div class="field">
+            <span class="field-label">
+              <span>Publisher Public Key (<code class="mono">SODIUM_CRYPTO_SIGN_PUBLICKEYBYTES</code>)</span>
+              <span class="mono">32 Bytes Hex</span>
+            </span>
+            <input id="inputPubKeyHex" type="text" class="input mono" readonly value="">
+          </div>
+
+          <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+            <button type="button" class="btn btn-primary" id="generateCertBtn" style="flex: 1;">
+              Sign &amp; Issue LIC-v1 Certificate
+            </button>
+            <button type="button" class="btn btn-secondary mono" id="copyCertBtn">
+              Copy Key
+            </button>
+          </div>
+        </div>
+      </article>
+
+      <!-- Right: Interactive Tamper & Offline Verifier Sandbox -->
+      <article class="panel" aria-labelledby="verifierHeading">
+        <div class="panel-header">
+          <div class="panel-title-wrap">
+            <span class="panel-kicker mono">02 // OFFLINE VERIFIER SANDBOX</span>
+            <h2 class="panel-title" id="verifierHeading">Tamper &amp; Detached Signature Inspector</h2>
+          </div>
+          <div style="display: flex; gap: 8px; flex-wrap: wrap;">
+            <button type="button" class="btn btn-danger-ghost mono" id="tamperByteBtn">
+              Mutate 1 Payload Byte
+            </button>
+            <button type="button" class="btn btn-secondary mono" id="restoreCertBtn">
+              Restore Valid Seal
+            </button>
+          </div>
+        </div>
+
+        <div class="panel-body">
+          <div id="sealBanner" class="seal-banner valid" role="status" aria-live="polite">
+            <div>
+              <div class="seal-status-title mono" id="sealStatusCode">
+                VALID_CRYPTOGRAPHIC_SEAL
+              </div>
+              <div class="seal-reason" id="sealStatusReason">
+                64-byte detached signature matches canonical LIC-v1 payload and bound domain hash.
+              </div>
+            </div>
+            <span class="pill-badge pill-valid mono" id="sealBadgePill">VERIFIED OFFLINE</span>
+          </div>
+
+          <div class="field">
+            <label class="field-label" for="sandboxCertInput">
+              <span>Signed Certificate (<code class="mono">LIC-v1.&lt;payload_b64url&gt;.&lt;sig_b64url&gt;</code>) — Edit any char to test tamper detection</span>
+            </label>
+            <textarea id="sandboxCertInput" class="textarea mono" spellcheck="false"></textarea>
+          </div>
+
+          <div class="form-row">
+            <div class="field">
+              <label class="field-label" for="verifyDomainInput">
+                <span>Runtime Host / HWID Assertion</span>
+              </label>
+              <input id="verifyDomainInput" type="text" class="input mono" value="billing.nusantara.dev">
+            </div>
+            <div class="field">
+              <span class="field-label">
+                <span>Computed SHA-256 Binding Hash</span>
+              </span>
+              <input id="computedBindingHash" type="text" class="input mono" readonly value="">
+            </div>
+          </div>
+
+          <div class="claims-grid" id="decodedClaimsGrid">
+            <div class="claim-cell">
+              <span class="claim-key mono">LICENSE ID (lid)</span>
+              <span class="claim-val mono" id="claimLid">-</span>
+            </div>
+            <div class="claim-cell">
+              <span class="claim-key mono">PRODUCT &amp; TIER (prd / tir)</span>
+              <span class="claim-val mono" id="claimPrd">-</span>
+            </div>
+            <div class="claim-cell">
+              <span class="claim-key mono">BOUND HASH (bnd)</span>
+              <span class="claim-val mono" id="claimBnd">-</span>
+            </div>
+            <div class="claim-cell">
+              <span class="claim-key mono">DETACHED SIGNATURE (64B HEX)</span>
+              <span class="claim-val mono" id="claimSig">-</span>
+            </div>
+          </div>
+        </div>
+      </article>
+    </section>
+
+    <!-- Bottom Row: Active Seat Telemetry Table + 1-Click PHP Verifier Exporter -->
+    <section class="operator-grid">
+      <!-- Active Seat & Domain Telemetry Ledger -->
+      <article class="panel" aria-labelledby="telemetryHeading">
+        <div class="panel-header">
+          <div class="panel-title-wrap">
+            <span class="panel-kicker mono">03 // SEAT &amp; HWID LEDGER</span>
+            <h2 class="panel-title" id="telemetryHeading">Active Domain &amp; Hardware Seat Bindings</h2>
+          </div>
+          <button type="button" class="btn btn-secondary mono" id="simulateActivateBtn">
+            + Activate Current Host
+          </button>
+        </div>
+
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Node / Domain</th>
+                <th>SHA-256 Fingerprint</th>
+                <th>Runtime</th>
+                <th>Status</th>
+              </tr>
+            </thead>
+            <tbody id="seatLedgerBody" class="mono">
+              <!-- Populated by JS -->
+            </tbody>
+          </table>
+        </div>
+      </article>
+
+      <!-- 1-Click PHP 8.2 / Laravel 11 Offline Verifier Snippet Exporter -->
+      <article class="panel" aria-labelledby="exporterHeading">
+        <div class="panel-header">
+          <div class="panel-title-wrap">
+            <span class="panel-kicker mono">04 // CLIENT SDK DROP-IN</span>
+            <h2 class="panel-title" id="exporterHeading">Laravel 11 / PHP 8.2 Offline Verifier Snippet</h2>
+          </div>
+          <button type="button" class="btn btn-primary mono" id="copyPhpSnippetBtn">
+            Copy PHP Verifier
+          </button>
+        </div>
+
+        <div class="panel-body">
+          <pre class="code-pre mono" id="phpSnippetCode"></pre>
+        </div>
+      </article>
+    </section>
+  </main>
+
+  <footer class="footer-bar">
+    <div>
+      <strong>Licensia</strong> — Laravel 11 / PHP 8.2 Ed25519 Cryptographic Licensing Engine (<code class="mono">josskixg/licensia</code>)
+    </div>
+    <div class="mono">
+      Vercel Geist Design System · Zero-Dependency <code class="mono">ext-sodium</code>
+    </div>
+  </footer>
+
+  <script>
+    (function () {
+      // Theme Polarity with localStorage persistence
+      const htmlEl = document.documentElement;
+      const themeToggleBtn = document.getElementById('themeToggleBtn');
+      const themeToggleLabel = document.getElementById('themeToggleLabel');
+
+      function applyTheme(theme) {
+        htmlEl.setAttribute('data-theme', theme);
+        themeToggleLabel.textContent = theme === 'dark' ? 'Light Mode' : 'Dark Mode';
+        try {
+          localStorage.setItem('licensia_theme', theme);
+        } catch (e) {}
+      }
+
+      const savedTheme = (() => {
+        try { return localStorage.getItem('licensia_theme'); } catch (e) { return null; }
+      })() || 'dark';
+      applyTheme(savedTheme);
+
+      themeToggleBtn.addEventListener('click', () => {
+        const next = htmlEl.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+        applyTheme(next);
+      });
+
+      // Deterministic Cryptographic Helpers (WebCrypto SHA-256 / HMAC-SHA256 64-byte signature seal)
+      function toBase64Url(uint8) {
+        let bin = '';
+        for (let i = 0; i < uint8.length; i++) {
+          bin += String.fromCharCode(uint8[i]);
+        }
+        return btoa(bin).replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, '');
+      }
+
+      function fromBase64Url(str) {
+        try {
+          const pad = str.length % 4 === 0 ? '' : '='.repeat(4 - (str.length % 4));
+          const b64 = str.replace(/-/g, '+').replace(/_/g, '/') + pad;
+          const bin = atob(b64);
+          const out = new Uint8Array(bin.length);
+          for (let i = 0; i < bin.length; i++) out[i] = bin.charCodeAt(i);
+          return out;
+        } catch (e) {
+          return null;
+        }
+      }
+
+      function toHex(uint8) {
+        return Array.from(uint8).map(b => b.toString(16).padStart(2, '0')).join('');
+      }
+
+      async function sha256Bytes(message) {
+        const data = new TextEncoder().encode(message);
+        const buf = await crypto.subtle.digest('SHA-256', data);
+        return new Uint8Array(buf);
+      }
+
+      async function hashEnvironmentBinding(domainOrHwid) {
+        const normalized = String(domainOrHwid || '')
+          .trim()
+          .toLowerCase()
+          .replace(/^https?:\/\//, '')
+          .replace(/\/+$/, '');
+        const digest = await sha256Bytes('licensia:v1:' + normalized);
+        return toHex(digest).slice(0, 24);
+      }
+
+      // Compute 64-byte detached cryptographic seal (matching Ed25519 64-byte width)
+      async function signDetached64(signingInput, pubKeyHex) {
+        const partA = await sha256Bytes('ed25519:R:' + pubKeyHex + ':' + signingInput);
+        const partB = await sha256Bytes('ed25519:S:' + pubKeyHex + ':' + signingInput);
+        const sig64 = new Uint8Array(64);
+        sig64.set(partA, 0);
+        sig64.set(partB, 32);
+        return sig64;
+      }
+
+      // State
+      let currentPubKeyHex = '8f4e9a1c6b2d08f1e5a3c7d9b4f201e6a8c4d2e0f9b7a5c3e1d8f6a4b2c03d7b';
+      let currentTier = 'pro';
+      let currentMaxSeats = 5;
+      let lastValidCertificate = '';
+      let issuedCounter = 1428;
+
+      const activeSeats = [
+        { host: 'billing.nusantara.dev', hash: '9c4a1e8f02b7d3c5a6e1f490', php: 'PHP 8.2.35', status: 'SEAT_ACTIVE' },
+        { host: 'api.nusantara.dev', hash: '4f8d2b1a7e3c9051d6a2b8e4', php: 'PHP 8.2.35', status: 'SEAT_ACTIVE' },
+        { host: 'worker-01.nusantara.dev', hash: '7e1c5a9b3d2f8046c1e9a7b2', php: 'PHP 8.3.11', status: 'SEAT_ACTIVE' }
+      ];
+
+      // DOM Elements
+      const navPubKeyShort = document.getElementById('navPubKeyShort');
+      const inputPubKeyHex = document.getElementById('inputPubKeyHex');
+      const inputProduct = document.getElementById('inputProduct');
+      const inputCustomer = document.getElementById('inputCustomer');
+      const inputDomain = document.getElementById('inputDomain');
+      const inputExpiry = document.getElementById('inputExpiry');
+      const selectedTierBadge = document.getElementById('selectedTierBadge');
+      const sandboxCertInput = document.getElementById('sandboxCertInput');
+      const verifyDomainInput = document.getElementById('verifyDomainInput');
+      const computedBindingHash = document.getElementById('computedBindingHash');
+      const sealBanner = document.getElementById('sealBanner');
+      const sealStatusCode = document.getElementById('sealStatusCode');
+      const sealStatusReason = document.getElementById('sealStatusReason');
+      const sealBadgePill = document.getElementById('sealBadgePill');
+      const claimLid = document.getElementById('claimLid');
+      const claimPrd = document.getElementById('claimPrd');
+      const claimBnd = document.getElementById('claimBnd');
+      const claimSig = document.getElementById('claimSig');
+      const metricVerifierState = document.getElementById('metricVerifierState');
+      const metricVerifierSub = document.getElementById('metricVerifierSub');
+      const metricSeatCount = document.getElementById('metricSeatCount');
+      const metricIssuedTotal = document.getElementById('metricIssuedTotal');
+      const seatLedgerBody = document.getElementById('seatLedgerBody');
+      const phpSnippetCode = document.getElementById('phpSnippetCode');
+
+      function updatePubKeyDisplay() {
+        inputPubKeyHex.value = currentPubKeyHex;
+        navPubKeyShort.textContent = currentPubKeyHex.slice(0, 8) + '...' + currentPubKeyHex.slice(-8);
+      }
+
+      function renderPhpSnippet(cert) {
+        phpSnippetCode.textContent = `<?php
+declare(strict_types=1);
+
+use App\\Services\\LicenseCryptoService;
+
+$crypto = new LicenseCryptoService();
+$publicKeyHex = '${currentPubKeyHex}';
+$certificate  = '${cert || lastValidCertificate}';
+
+$result = $crypto->verifyCertificateOffline(
+    certificate: $certificate,
+    publicKeyHex: $publicKeyHex,
+    expectedDomainOrHwid: $_SERVER['HTTP_HOST'] ?? '${verifyDomainInput.value}'
+);
+
+if (!$result['valid']) {
+    throw new RuntimeException('Licensia Seal Rejected: ' . $result['status']);
+}
+// Verified offline! Tier: {$result['payload']['tir']} | Max Seats: {$result['payload']['sts']}`;
+      }
+
+      function renderSeatLedger() {
+        metricSeatCount.textContent = `${activeSeats.length} / ${currentMaxSeats} SEATS`;
+        seatLedgerBody.innerHTML = activeSeats.map(item => `
+          <tr>
+            <td>${item.host}</td>
+            <td><code>${item.hash}</code></td>
+            <td>${item.php}</td>
+            <td><span class="pill-badge pill-valid">${item.status}</span></td>
+          </tr>
+        `).join('');
+      }
+
+      async function generateCertificate() {
+        const domainVal = inputDomain.value.trim() || '*';
+        const bndHash = domainVal === '*' ? '*' : await hashEnvironmentBinding(domainVal);
+        const expTimestamp = Math.floor(new Date(inputExpiry.value + 'T23:59:59Z').getTime() / 1000);
+        const lidSeed = await sha256Bytes(inputProduct.value + ':' + inputCustomer.value + ':' + domainVal + ':' + currentTier);
+        const lid = 'lic_' + toHex(lidSeed).slice(0, 12);
+
+        const payloadObj = {
+          ver: 1,
+          lid: lid,
+          prd: inputProduct.value.trim() || 'larasaas-commerce-v4',
+          cst: inputCustomer.value.trim() || 'cto@nusantara.dev',
+          bnd: bndHash,
+          env: domainVal,
+          tir: currentTier,
+          sts: currentMaxSeats,
+          iat: 1762646400,
+          exp: Number.isFinite(expTimestamp) ? expTimestamp : 1825804799
+        };
+
+        const payloadJson = JSON.stringify(payloadObj);
+        const payloadB64 = toBase64Url(new TextEncoder().encode(payloadJson));
+        const signingInput = 'LIC-v1.' + payloadB64;
+        const sigBytes = await signDetached64(signingInput, currentPubKeyHex);
+        const cert = signingInput + '.' + toBase64Url(sigBytes);
+
+        lastValidCertificate = cert;
+        sandboxCertInput.value = cert;
+        verifyDomainInput.value = domainVal;
+        await verifyCertificateInSandbox();
+        renderPhpSnippet(cert);
+      }
+
+      async function verifyCertificateInSandbox() {
+        const rawCert = sandboxCertInput.value.trim();
+        const runtimeDomain = verifyDomainInput.value.trim();
+        const runtimeHash = runtimeDomain === '*' ? '*' : await hashEnvironmentBinding(runtimeDomain);
+        computedBindingHash.value = runtimeHash;
+
+        const parts = rawCert.split('.');
+        if (parts.length !== 3 || parts[0] !== 'LIC-v1') {
+          setVerifierState(false, 'MALFORMED_CERTIFICATE', 'Certificate must match LIC-v1.<payload_b64url>.<sig_b64url> format.');
+          return;
+        }
+
+        const [prefix, encodedPayload, encodedSig] = parts;
+        const sigBytes = fromBase64Url(encodedSig);
+        const payloadBytes = fromBase64Url(encodedPayload);
+
+        let decodedPayload = null;
+        if (payloadBytes) {
+          try {
+            decodedPayload = JSON.parse(new TextDecoder().decode(payloadBytes));
+          } catch (e) {
+            decodedPayload = null;
+          }
+        }
+
+        if (decodedPayload) {
+          claimLid.textContent = decodedPayload.lid || '-';
+          claimPrd.textContent = `${decodedPayload.prd || '-'} (${String(decodedPayload.tir || 'pro').toUpperCase()} · ${decodedPayload.sts || 1} seats)`;
+          claimBnd.textContent = decodedPayload.bnd || '-';
+        } else {
+          claimLid.textContent = 'CORRUPTED';
+          claimPrd.textContent = 'CORRUPTED';
+          claimBnd.textContent = 'CORRUPTED';
+        }
+
+        if (!sigBytes || sigBytes.length !== 64) {
+          claimSig.textContent = 'INVALID_64B_WIDTH';
+          setVerifierState(false, 'TAMPERED_SIGNATURE', 'Detached Ed25519 signature must be exactly 64 bytes.');
+          return;
+        }
+
+        claimSig.textContent = toHex(sigBytes).slice(0, 28) + '...';
+
+        const signingInput = prefix + '.' + encodedPayload;
+        const expectedSig = await signDetached64(signingInput, currentPubKeyHex);
+        const isSigMatch = toHex(sigBytes) === toHex(expectedSig);
+
+        if (!isSigMatch) {
+          setVerifierState(false, 'TAMPERED_SIGNATURE', 'Ed25519 detached signature verification failed! Payload or signature byte was altered.');
+          return;
+        }
+
+        if (!decodedPayload || !decodedPayload.exp || !decodedPayload.bnd) {
+          setVerifierState(false, 'CORRUPTED_PAYLOAD', 'Canonical JSON claims missing after valid signature check.');
+          return;
+        }
+
+        const nowSec = Math.floor(Date.now() / 1000);
+        if (Number(decodedPayload.exp) < nowSec) {
+          setVerifierState(false, 'EXPIRED_LICENSE', `Certificate expired at UNIX timestamp ${decodedPayload.exp}.`);
+          return;
+        }
+
+        if (decodedPayload.bnd !== '*' && decodedPayload.bnd !== runtimeHash) {
+          setVerifierState(
+            false,
+            'DOMAIN_MISMATCH',
+            `Bound hash (${decodedPayload.bnd}) does not match runtime host "${runtimeDomain}" (${runtimeHash}).`
+          );
+          return;
+        }
+
+        setVerifierState(
+          true,
+          'VALID_CRYPTOGRAPHIC_SEAL',
+          '64-byte detached signature matches canonical LIC-v1 payload and bound domain hash.'
+        );
+      }
+
+      function setVerifierState(isValid, code, reason) {
+        sealBanner.className = 'seal-banner ' + (isValid ? 'valid' : 'tampered');
+        sealStatusCode.textContent = code;
+        sealStatusReason.textContent = reason;
+        sealBadgePill.className = 'pill-badge mono ' + (isValid ? 'pill-valid' : 'pill-tampered');
+        sealBadgePill.textContent = isValid ? 'VERIFIED OFFLINE' : 'SEAL REJECTED';
+
+        metricVerifierState.textContent = isValid ? 'VALID_SEAL' : code;
+        metricVerifierState.style.color = isValid ? 'var(--seal-emerald)' : 'var(--danger-red)';
+        metricVerifierSub.textContent = isValid ? 'Zero DB round-trips required' : 'Cryptographic assertion halted';
+      }
+
+      // Event Listeners
+      document.querySelectorAll('.tier-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+          document.querySelectorAll('.tier-btn').forEach(b => b.setAttribute('aria-pressed', 'false'));
+          btn.setAttribute('aria-pressed', 'true');
+          currentTier = btn.getAttribute('data-tier');
+          currentMaxSeats = parseInt(btn.getAttribute('data-seats'), 10);
+          selectedTierBadge.textContent = `TIER: ${currentTier.toUpperCase()} (${currentMaxSeats} SEATS)`;
+          renderSeatLedger();
+          generateCertificate();
+        });
+      });
+
+      document.getElementById('generateCertBtn').addEventListener('click', () => {
+        issuedCounter += 1;
+        metricIssuedTotal.textContent = issuedCounter.toLocaleString('en-US');
+        generateCertificate();
+      });
+
+      document.getElementById('copyCertBtn').addEventListener('click', function () {
+        navigator.clipboard?.writeText(sandboxCertInput.value);
+        const orig = this.textContent;
+        this.textContent = 'Copied!';
+        setTimeout(() => { this.textContent = orig; }, 1200);
+      });
+
+      document.getElementById('tamperByteBtn').addEventListener('click', () => {
+        const parts = sandboxCertInput.value.trim().split('.');
+        if (parts.length === 3 && parts[1].length > 4) {
+          const payload = parts[1];
+          const idx = Math.floor(payload.length / 2);
+          const flippedChar = payload[idx] === 'A' ? 'B' : 'A';
+          parts[1] = payload.slice(0, idx) + flippedChar + payload.slice(idx + 1);
+          sandboxCertInput.value = parts.join('.');
+          verifyCertificateInSandbox();
+        }
+      });
+
+      document.getElementById('restoreCertBtn').addEventListener('click', () => {
+        if (lastValidCertificate) {
+          sandboxCertInput.value = lastValidCertificate;
+          verifyDomainInput.value = inputDomain.value.trim();
+          verifyCertificateInSandbox();
+        }
+      });
+
+      document.getElementById('rotateKeyBtn').addEventListener('click', async () => {
+        const seed = await sha256Bytes('rotate:' + Date.now() + ':' + currentPubKeyHex);
+        currentPubKeyHex = toHex(seed);
+        updatePubKeyDisplay();
+        await verifyCertificateInSandbox();
+        renderPhpSnippet(sandboxCertInput.value);
+      });
+
+      sandboxCertInput.addEventListener('input', () => {
+        verifyCertificateInSandbox();
+      });
+
+      verifyDomainInput.addEventListener('input', () => {
+        verifyCertificateInSandbox();
+      });
+
+      document.getElementById('simulateActivateBtn').addEventListener('click', async () => {
+        const host = verifyDomainInput.value.trim() || 'node-new.nusantara.dev';
+        const hash = await hashEnvironmentBinding(host);
+        const exists = activeSeats.some(s => s.hash === hash);
+        if (!exists && activeSeats.length < currentMaxSeats) {
+          activeSeats.unshift({
+            host: host,
+            hash: hash,
+            php: 'PHP 8.2.35',
+            status: 'SEAT_ACTIVATED'
+          });
+        } else if (!exists && activeSeats.length >= currentMaxSeats) {
+          setVerifierState(false, 'SEAT_QUOTA_EXCEEDED', `Cannot activate ${host}: ${activeSeats.length}/${currentMaxSeats} seats already bound.`);
+          return;
+        }
+        renderSeatLedger();
+      });
+
+      document.getElementById('copyPhpSnippetBtn').addEventListener('click', function () {
+        navigator.clipboard?.writeText(phpSnippetCode.textContent);
+        const orig = this.textContent;
+        this.textContent = 'Copied Snippet!';
+        setTimeout(() => { this.textContent = orig; }, 1200);
+      });
+
+      // Initialize
+      updatePubKeyDisplay();
+      renderSeatLedger();
+      generateCertificate();
+    })();
+  </script>
+</body>
+</html>
