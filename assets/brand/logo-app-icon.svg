@@ -1,6 +1,5 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" width="256" height="256"><title>Licensia</title><rect width="256" height="256" rx="57.6" fill="#0A0A0A"/><g transform="translate(48.64 48.64) scale(0.62)" fill="#ffffff">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" width="256" height="256"><title>Licensia</title><rect width="256" height="256" rx="57.6" fill="#111111"/><g transform="translate(-13.06 -13.06) scale(1.102)" fill="#ffffff">
   
-  <rect x="0" y="0" width="256" height="256" rx="48" fill="#ffffff"/>
   <!-- Outer Cryptographic Prism L-Frame (exact 90° and 45° chamfer) -->
   <path d="M56 56 H112 V152 H200 V200 H96 L56 160 Z" fill="#ffffff"/>
   <!-- Ed25519 Verification Key Bit & Seal (exact 45° & 90° geometry) -->
